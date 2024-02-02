@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: digests-${{ env.PLATFORM_PAIR }}
-          path: /tmp/digests/*
+          path: /tmp/digests/${{ matrix.image }}/*
           if-no-files-found: error
           retention-days: 1
   merge:
