@@ -55,6 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./${{ matrix.image }}/Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,name=rss3/${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
@@ -119,16 +120,6 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=sha,prefix={{branch}}-,enable=${{ !startsWith(github.ref, 'refs/tags') && github.event_name != 'pull_request' }},event=branch
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./${{ matrix.image }}/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ matrix.platform }}
 
       - name: Create manifest list and push
         working-directory: /tmp/digests/${{ matrix.image }}
