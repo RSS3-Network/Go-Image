@@ -4,4 +4,5 @@ RUN apk add --no-cache \
     git \
     make \
     gcc \
-    libc-dev
+    libc-dev \
+    curl
