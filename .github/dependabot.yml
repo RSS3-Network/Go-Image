@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: docker
-    directory: go-builder
+    directory: go-runtime
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
