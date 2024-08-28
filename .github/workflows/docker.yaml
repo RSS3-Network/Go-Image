@@ -59,7 +59,7 @@ jobs:
           file: ./${{ matrix.image }}/Dockerfile
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=ghcr.io/${{ github.repository }}/${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=ghcr.io/rss3-network/go-image/${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
       - name: Export digest
         run: |
           mkdir -p /tmp/digests/${{ matrix.image }}
@@ -126,8 +126,8 @@ jobs:
         working-directory: /tmp/digests/${{ matrix.image }}
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            $(printf 'ghcr.io/${{ github.repository }}/${{ matrix.image }}@sha256:%s ' *)
+            $(printf 'ghcr.io/rss3-network/go-image/${{ matrix.image }}@sha256:%s ' *)
       - name: Inspect image
         if: github.event_name != 'pull_request'
         run: |
-          docker buildx imagetools inspect ghcr.io/${{ github.repository }}/${{ matrix.image }}:${{ steps.meta.outputs.version }}
+          docker buildx imagetools inspect ghcr.io/rss3-network/go-image/${{ matrix.image }}:${{ steps.meta.outputs.version }}
